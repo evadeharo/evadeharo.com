@@ -1,39 +1,44 @@
-import { useFrame, useThree } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
-import { useRef, useState } from "react";
-import * as THREE from "three";
+import { useFrame, useThree } from "@react-three/fiber"
+import { useRef, useState } from "react"
+import { Html } from "@react-three/drei"
+import * as THREE from "three"
 
 export function BgCanvas() {
-  const groupRef = useRef<THREE.Group | null>(null);
-  const [animating, setAnimating] = useState(true);
-  const { viewport } = useThree();
+  const groupRef = useRef<THREE.Group | null>(null)
+  const { viewport } = useThree()
 
-  const top = viewport.height / 2;
-  const bottom = -viewport.height / 2;
-  const threshold = 0.4;
+  const top = viewport.height / 2
+  const bottom = -viewport.height / 2
+  const thresholdBot = 0.8
+  const thresholdTop = 0.3
+  const velocity = 0.5
 
-  const [position, setPosition] = useState(top)
+  const [direction, setDirection] = useState(1)
+
+  const changeDirection = (currentY: number) => {
+    if (direction === 1 && Math.abs(currentY - bottom) < thresholdBot) {
+      setDirection(-1)
+    } else if (direction === -1 && Math.abs(currentY - top) < thresholdTop) {
+      setDirection(1)
+    }
+  }
+
+  const softlyBorderAnimation = (currentY: number, delta: number) => {
+    const target = direction === 1 ? bottom : top;
+    const lerp = THREE.MathUtils.lerp(currentY, target, velocity * delta);
+    groupRef.current!.position.y = direction === 1 ? Math.max(lerp, bottom) : Math.min(lerp, top);
+  };
 
   useFrame((_, delta) => {
-    if (!groupRef.current || !animating) return
+    if (!groupRef.current) return;
 
     const currentY = groupRef.current.position.y;
-    const distanceToBottom = Math.abs(currentY - bottom);
-
-    if (distanceToBottom < threshold) {
-      setPosition(currentY)
-      setAnimating(false);
-      return;
-    }
-
-    groupRef.current.position.y = Math.max(
-      THREE.MathUtils.lerp(currentY, bottom, 0.30 * delta),
-      bottom
-    );
+    changeDirection(currentY);
+    softlyBorderAnimation(currentY, delta);
   });
 
   return (
-    <group ref={groupRef} position={[0, position, 0]}>
+    <group ref={groupRef} position={[0, top, 0]}>
       <Html
         occlude
         as="div"
@@ -42,5 +47,5 @@ export function BgCanvas() {
         <h2>HOLA que ase</h2>
       </Html>
     </group>
-  );
+  )
 }
