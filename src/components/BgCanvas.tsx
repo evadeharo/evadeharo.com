@@ -38,7 +38,6 @@ export function BgCanvas() {
     const scrollPos = scroll?.range(0, 1) * (bottom - top) + top;
     const currentY = groupRef.current.position.y;
 
-    console.log(scroll?.range(0, 1) !== 0, scroll, scroll?.range(0,1))
     if (scroll && scroll.range(0, 1) !== 0) {
       groupRef.current.position.y = scrollPos;
     } else {
