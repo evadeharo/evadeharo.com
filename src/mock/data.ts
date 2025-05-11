@@ -14,7 +14,7 @@ export type MockedDataTypes = {
 
 export const mockedData: MockedDataTypes = {
     title: "Eva De Haro",
-    subtitle: "Creative person who does not like to define himself in one word",
+    subtitle: "Creative person who does not like to define herself in one word",
     contact: "evadeharomunoz@gmail.com",
     contactHref: "mailto:evadeharomunoz@gmail.com",
     items: [
