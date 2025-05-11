@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "Rawest";
+  src: url("./assets/fonts/Rawest-Bold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Rawest";
+  src: url("./assets/fonts/Rawest-Light.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Rawest";
+  src: url("./assets/fonts/Rawest-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
