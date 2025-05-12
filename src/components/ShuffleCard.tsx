@@ -10,45 +10,39 @@ type Props = Omit<ShuffleCardType, "id"> & {
 
 export default function ShuffleCard({ title, subtitle, index }: Props) {
   const groupRef = useRef<Group>(null);
-  const [hasMoved, setHasMoved] = useState(false);
-  const [hovered, setHovered] = useState(false);
+  const [targetPosition, setTargetPosition] = useState<Vector3 | null>(null);
 
   const initialPosition = useMemo(
-    () => new Vector3(0, 0, index * 0.001), // apiladas
+    () => new Vector3(0, 0, index * 0.4),
     [index]
   );
 
-  const escapePosition = useMemo(() => {
+  function generateEscapePosition(): Vector3 {
     const direction = new Vector3(
-      Math.random() * 2 - 1, // x: -1 a 1
-      Math.random() * 2 - 1, // y: -1 a 1
-      Math.random() * 1 + 1  // z: 1 a 2
+      Math.random() * 2 - 1,
+      Math.random() * 2 - 1,
+      Math.random() * 1 + 1
     );
     return initialPosition.clone().add(direction.multiplyScalar(1.5));
-  }, [initialPosition]);
+  }
 
   useFrame(() => {
-    if (!groupRef.current) return;
-    if (hovered && !hasMoved) {
-      // Huir solo una vez
-      groupRef.current.position.lerp(escapePosition, 0.1);
-      // Si ya está suficientemente cerca, fijamos posición
-      if (groupRef.current.position.distanceTo(escapePosition) < 0.01) {
-        groupRef.current.position.copy(escapePosition);
-        setHasMoved(true);
-      }
+    if (!groupRef.current || !targetPosition) return;
+    groupRef.current.position.lerp(targetPosition, 0.05);
+
+    if (groupRef.current.position.distanceTo(targetPosition) < 0.01) {
+      groupRef.current.position.copy(targetPosition);
+      setTargetPosition(null);
     }
   });
 
   return (
-    <group
-      ref={groupRef}
-      position={initialPosition.toArray()}
-    >
-      <Html transform occlude scale={0.4}>
+    <group ref={groupRef} position={initialPosition.toArray()}>
+      <Html occlude>
         <div
-          className="bg-gray-secondary border border-px border-black max-w-[28rem] h-max pointer-events-auto"
-          onMouseEnter={() => setHovered(true)}
+          className="bg-gray-secondary border border-px border-black w-[28rem] h-max pointer-events-auto"
+          onMouseEnter={() => setTargetPosition(generateEscapePosition())}
+          onClick={() => setTargetPosition(generateEscapePosition())}
         >
           <h2 className="p-4 text-[1.75rem] font-bold">{title}</h2>
           <div className="w-full h-px bg-black" />
