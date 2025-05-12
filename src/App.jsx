@@ -4,7 +4,7 @@ import { mockedData } from "./mock/data"
 
 function App() {
   return (
-    <div className="h-screen w-full bg-gray overflow-hidden relative">
+    <div className="h-[100dvh] w-full bg-gray overflow-hidden relative">
       <LayoutContent mockedData={mockedData}  />
       {/* <ShuffleContainer items={mockedData.items} /> */}
     </div>
