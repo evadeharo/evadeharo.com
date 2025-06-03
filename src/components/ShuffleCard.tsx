@@ -56,9 +56,9 @@ export default function ShuffleCard({ title, subtitle, index }: Props) {
           onMouseEnter={() => setTargetPosition(generateEscapePosition())}
           onClick={() => setTargetPosition(generateEscapePosition())}
         >
-          <h2 className="p-4 text-[1.75rem] font-bold">{title}</h2>
+          <h2 className="p-4 text-[1.35rem] lg:text-[1.75rem] font-bold">{title}</h2>
           <div className="w-full h-px bg-black" />
-          <h3 className="p-4 text-[1.15rem]">{subtitle}</h3>
+          <h3 className="p-4 text-[0.90rem] lg:text-[1.15rem]">{subtitle}</h3>
         </div>
       </Html>
     </group>

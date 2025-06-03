@@ -10,6 +10,7 @@ export type MockedDataTypes = {
     contact: string,
     contactHref: string,
     items: ShuffleCardType[],
+    jokeText: Record<string, string>
 }
 
 export const mockedData: MockedDataTypes = {
@@ -17,6 +18,10 @@ export const mockedData: MockedDataTypes = {
     subtitle: "Creative person who does not like to define herself in one word",
     contact: "evadeharomunoz@gmail.com",
     contactHref: "mailto:evadeharomunoz@gmail.com",
+    jokeText: {
+        label: "Stop it, I want to read 😡",
+        text: "Ja, ja, ja. Nope. if you want information, earn it or write me an email and you'll be done sooner. 😉",
+    },
     items: [
     
         {
