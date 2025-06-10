@@ -44,7 +44,7 @@ export default function LayoutContent({ mockedData }: LayoutContentProps) {
 
         <a
           href={mockedData.contactHref}
-          className="text-[1.1rem] md:text-[1.75rem] font-light"
+          className="text-[1.1rem] md:text-[1.75rem] font-light z-20"
         >
           {mockedData.contact}
         </a>
